@@ -1,7 +1,13 @@
+import { registerUser } from "../API/AuthApi";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button, Card, HelperText, Label, TextInput } from "flowbite-react";
 
 export function Register() {
+
+  const navigate = useNavigate();
+  const [apiError, setApiError] = useState("");
+  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -54,12 +60,27 @@ export function Register() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validate();
     
     if (isValid) {
-      // TODO: Add your fetch/axios request to your Express backend here
+      try {
+        // Send userName and password to match backend schema
+        const response = await registerUser({
+            userName: formData.username,
+            password: formData.password,
+            email: formData.email
+        });
+
+        // Save token and navigate to home
+        localStorage.setItem("token", response.data.token);
+        console.log("Registered successfully!");
+        navigate("/");
+
+      } catch (error) {
+        setApiError(error.response?.data?.message || "Registration failed.");
+      }
     }
   };
 
@@ -82,7 +103,7 @@ export function Register() {
               color={errors.username ? "failure" : "gray"}
               
                       />
-                                                        {errors.username && <HelperText color="failure">{errors.username}</HelperText>}
+              {errors.username && <HelperText color="failure">{errors.username}</HelperText>}
 
           </div>
 
@@ -112,7 +133,7 @@ export function Register() {
               onChange={handleChange}
               color={errors.password ? "failure" : "gray"}
                       />
-                                                        {errors.password && <HelperText color="failure">{errors.password}</HelperText>}
+              {errors.password && <HelperText color="failure">{errors.password}</HelperText>}
 
           </div>
 
@@ -127,7 +148,7 @@ export function Register() {
               onChange={handleChange}
               color={errors.confirmPassword ? "failure" : "gray"}
                       />
-                                  {errors.confirmPassword && <HelperText color="failure">{errors.confirmPassword}</HelperText>}
+              {errors.confirmPassword && <HelperText color="failure">{errors.confirmPassword}</HelperText>}
 
             </div>
 
