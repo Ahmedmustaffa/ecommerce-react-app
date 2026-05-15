@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, HelperText, Label, TextInput } from "flowbite-react";
 
 export function Register() {
@@ -133,6 +134,16 @@ export function Register() {
 
           <Button type="submit">Submit</Button>
         </form>
+
+        <p className="text-center text-sm text-gray-600 dark:text-gray-300">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-medium text-cyan-700 hover:underline dark:text-cyan-400"
+          >
+            Login
+          </Link>
+        </p>
       </Card>
     </div>
   );
