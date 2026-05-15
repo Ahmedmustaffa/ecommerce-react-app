@@ -3,6 +3,14 @@ import { Button } from "flowbite-react";
 import { Nav } from "../components/Navbar";
 
 export default function Home() {
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
+  const currentUser = localStorage.getItem("currentUser");
+  const isLoggedIn = Boolean(token || user || currentUser);
+
+  if (isLoggedIn) {
+    return <Navigate to="/product" replace />;
+  }
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Nav />
