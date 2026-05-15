@@ -5,6 +5,8 @@ import ProductDetails from "../pages/ProductDetails.jsx";
 import Product from '../pages/Product.jsx';
 import Favorite from '../pages/Favorite.jsx';
 import Home from "../pages/Home.jsx";
+import CartPage from "../components/CartPage.jsx"
+import Shipping from "../components/Shipping.jsx"
 
 export default function MainLayout() {
     return (
@@ -19,6 +21,8 @@ export default function MainLayout() {
                         <Route path="/product" element={<Product />} />
                         <Route path="/product/:id" element={<ProductDetails />} />
                         <Route path="/favorite" element={<Favorite />} />
+                        <Route path="/cart" element={<CartPage />} />
+                        <Route path="/shipping" element={<Shipping />} />
                     </Routes>
                 </BrowserRouter>
             </main>
