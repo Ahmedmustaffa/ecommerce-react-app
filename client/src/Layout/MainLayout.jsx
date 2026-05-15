@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage.jsx";
 import ProductDetails from "../pages/ProductDetails.jsx";
@@ -13,16 +14,31 @@ export default function MainLayout() {
         <>
             <main className='dark:bg-gray-900 w-full min-h-screen flex flex-col'>
                 <BrowserRouter>
-                    
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/product" element={<Product />} />
-                        <Route path="/product/:id" element={<ProductDetails />} />
-                        <Route path="/favorite" element={<Favorite />} />
-                        <Route path="/cart" element={<CartPage />} />
-                        <Route path="/shipping" element={<Shipping />} />
+
+                        <Route 
+                            path="/product" 
+                            element={<ProtectedRoute><Product /></ProtectedRoute>} 
+                        />
+                        <Route 
+                            path="/product/:id" 
+                            element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} 
+                        />
+                        <Route 
+                            path="/favorite" 
+                            element={<ProtectedRoute><Favorite /></ProtectedRoute>} 
+                        />
+                        <Route 
+                            path="/cart" 
+                            element={<ProtectedRoute><CartPage /></ProtectedRoute>} 
+                        />
+                        <Route 
+                            path="/shipping" 
+                            element={<ProtectedRoute><Shipping /></ProtectedRoute>} 
+                        />
                     </Routes>
                 </BrowserRouter>
             </main>
