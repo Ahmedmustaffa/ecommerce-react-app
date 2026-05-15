@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "../pages/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage.jsx";
 import SharedLayout from './SharedLayout.jsx';
+import ProductDetails from "../pages/ProductDetails.jsx";
 
 export default function MainLayout() {
     return (
@@ -14,6 +15,7 @@ export default function MainLayout() {
                         <Route path="/" element={<SharedLayout />}></Route>
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/product/:id" element={<ProductDetails />} />
                     </Routes>
                 </BrowserRouter>
             </main>
