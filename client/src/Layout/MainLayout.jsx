@@ -1,9 +1,10 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "../pages/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage.jsx";
-import SharedLayout from './SharedLayout.jsx';
 import ProductDetails from "../pages/ProductDetails.jsx";
+import Product from '../pages/Product.jsx';
+import Favorite from '../pages/Favorite.jsx';
+import Home from "../pages/Home.jsx";
 
 export default function MainLayout() {
     return (
@@ -12,10 +13,12 @@ export default function MainLayout() {
                 <BrowserRouter>
                     
                     <Routes>
-                        <Route path="/" element={<SharedLayout />}></Route>
+                        <Route path="/" element={<Home />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/product" element={<Product />} />
                         <Route path="/product/:id" element={<ProductDetails />} />
+                        <Route path="/favorite" element={<Favorite />} />
                     </Routes>
                 </BrowserRouter>
             </main>

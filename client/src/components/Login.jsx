@@ -1,5 +1,6 @@
 // src/components/Login.jsx
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Checkbox, HelperText, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../API/AuthApi";
@@ -87,6 +88,16 @@ export function Login() {
           
           <Button type="submit">Submit</Button>
         </form>
+
+        <p className="text-center text-sm text-gray-600 dark:text-gray-300">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="font-medium text-cyan-700 hover:underline dark:text-cyan-400"
+          >
+            Sign up
+          </Link>
+        </p>
       </Card>
     </div>
   );
