@@ -1,36 +1,49 @@
+// src/components/Login.jsx
 import { useState } from "react";
 import { Button, Card, Checkbox, HelperText, Label, TextInput } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../API/AuthApi";
 
 export function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  // Changed email to username
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState(""); // To show backend errors
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    if (errors[e.target.id]) {
-      setErrors({ ...errors, [e.target.id]: null });
-    }
+    if (errors[e.target.id]) setErrors({ ...errors, [e.target.id]: null });
+    setApiError(""); 
   };
 
   const validate = () => {
     const newErrors = {};
-
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
-
+    if (!formData.username) newErrors.username = "Username is required";
+    if (!formData.password) newErrors.password = "Password is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      // TODO: Add login API call here
+      try {
+        // Match the backend property names (userName)
+        const response = await loginUser({ 
+            userName: formData.username, 
+            password: formData.password 
+        });
+        
+        // Save token and redirect
+        localStorage.setItem("token", response.data.token);
+        console.log("Logged in successfully!");
+        navigate("/"); 
+
+      } catch (error) {
+        // Display error message from backend
+        setApiError(error.response?.data?.message || "Something went wrong logging in.");
+      }
     }
   };
 
@@ -39,26 +52,24 @@ export function Login() {
       <Card className="min-w-lg">
         <h3 className="dark:text-white text-2xl">Login</h3>
         
+        {apiError && <HelperText color="failure" className="text-center text-lg">{apiError}</HelperText>}
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <div className="mb-2 block">
-              <Label htmlFor="email">Your email</Label>
-            </div>
+            <div className="mb-2 block"><Label htmlFor="username">Username</Label></div>
             <TextInput 
-              id="email" 
-              type="email" 
-              placeholder="name@example.com" 
-              value={formData.email}
+              id="username" 
+              type="text" 
+              placeholder="Your username" 
+              value={formData.username}
               onChange={handleChange}
-              color={errors.email ? "failure" : "gray"}
+              color={errors.username ? "failure" : "gray"}
             />
-            {errors.email && <HelperText color="failure">{errors.email}</HelperText>}
+            {errors.username && <HelperText color="failure">{errors.username}</HelperText>}
           </div>
 
           <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password">Your password</Label>
-            </div>
+            <div className="mb-2 block"><Label htmlFor="password">Your password</Label></div>
             <TextInput 
               id="password" 
               type="password" 
