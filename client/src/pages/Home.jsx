@@ -1,16 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { Nav } from "../components/Navbar";
 
 export default function Home() {
+  // 1. Check for authentication tokens in localStorage
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   const currentUser = localStorage.getItem("currentUser");
   const isLoggedIn = Boolean(token || user || currentUser);
 
+  // 2. If the user is already logged in, redirect to /product immediately
   if (isLoggedIn) {
     return <Navigate to="/product" replace />;
   }
+
+  // 3. Otherwise, render the standard Home page for guests
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Nav />
