@@ -7,12 +7,11 @@ const validateUser = (data) => {
             .min(3)
             .max(20)
             .required(),
-            
+
         password: Joi.string()
             .min(8)
             .max(25)
             .required()
-            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
     });
     return schema.validate(data);
 };
@@ -35,7 +34,7 @@ const validateProduct = (data) => {
 const validateCart = (data) => {
     const schema = Joi.object({
         productId: Joi.string()
-            .regex(/^[0-9a-fA-F]{24}$/) 
+            .regex(/^[0-9a-fA-F]{24}$/)
             .required()
             .messages({
                 'string.pattern.base': 'Invalid Product ID format'
