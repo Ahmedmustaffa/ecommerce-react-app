@@ -11,7 +11,9 @@ const validateUser = (data) => {
         password: Joi.string()
             .min(8)
             .max(25)
-            .required()
+            .required(),
+
+        email: Joi.string().email().required()
     });
     return schema.validate(data);
 };
