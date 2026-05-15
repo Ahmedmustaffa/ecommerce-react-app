@@ -18,6 +18,7 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const [favoriteIds, setFavoriteIds] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -56,20 +57,27 @@ export default function Product() {
 
   const filteredProducts = useMemo(() => {
     const value = searchTerm.trim().toLowerCase();
-
-    if (!value) {
-      return products;
-    }
+    const categoryValue = selectedCategory.toLowerCase();
 
     return products.filter((product) => {
       const name = product?.name?.toLowerCase() || "";
       const category = product?.category?.toLowerCase() || "";
+      const matchesSearch = !value || name.includes(value) || category.includes(value);
+      const matchesCategory = !categoryValue || category === categoryValue;
 
-      return name.includes(value) || category.includes(value);
+      return matchesSearch && matchesCategory;
     });
-  }, [products, searchTerm]);
+  }, [products, searchTerm, selectedCategory]);
 
   const featuredProducts = useMemo(() => products.slice(0, 4), [products]);
+
+  const categories = useMemo(() => {
+    const values = products
+      .map((product) => product?.category)
+      .filter(Boolean);
+
+    return [...new Set(values)].sort();
+  }, [products]);
 
   const getShortDescription = (description = "") => {
     if (description.length <= 110) {
@@ -128,22 +136,43 @@ export default function Product() {
               Products
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-              Search by product name or category.
+              Search by product name and filter by category.
             </p>
           </div>
 
-          <div className="w-full md:max-w-md">
-            <label htmlFor="product-search" className="sr-only">
-              Search products
-            </label>
-            <input
-              id="product-search"
-              type="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search products or categories..."
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cyan-600 focus:ring-2 focus:ring-cyan-200 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-900"
-            />
+          <div className="grid w-full gap-3 sm:grid-cols-[1fr_220px] md:max-w-2xl">
+            <div>
+              <label htmlFor="product-search" className="sr-only">
+                Search products
+              </label>
+              <input
+                id="product-search"
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search products..."
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cyan-600 focus:ring-2 focus:ring-cyan-200 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-900"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="product-category" className="sr-only">
+                Category
+              </label>
+              <select
+                id="product-category"
+                value={selectedCategory}
+                onChange={(event) => setSelectedCategory(event.target.value)}
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cyan-600 focus:ring-2 focus:ring-cyan-200 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-cyan-500 dark:focus:ring-cyan-900"
+              >
+                <option value="">All categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 

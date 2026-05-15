@@ -5,8 +5,8 @@ import ProductDetails from "../pages/ProductDetails.jsx";
 import Product from '../pages/Product.jsx';
 import Favorite from '../pages/Favorite.jsx';
 import Home from "../pages/Home.jsx";
-import CartPage from "../components/CartPage.jsx"
-import Shipping from "../components/Shipping.jsx"
+import CartPage from "../pages/CartPage.jsx"
+import Shipping from "../pages/Shipping.jsx"
 
 export default function MainLayout() {
     return (

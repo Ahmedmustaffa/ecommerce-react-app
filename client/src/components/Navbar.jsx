@@ -58,13 +58,13 @@ export function Nav() {
         </div>
 
         <div className="hidden items-center justify-center gap-8 md:flex">
-          <NavbarLink as={Link} to="/product">
+          <NavbarLink as={Link} to="/product" className="dark:text-gray-200">
             Product
           </NavbarLink>
-          <NavbarLink as={Link} to="/cart">
+          <NavbarLink as={Link} to="/cart" className="dark:text-gray-200">
             Cart
           </NavbarLink>
-          <NavbarLink as={Link} to="/favorite">
+          <NavbarLink as={Link} to="/favorite" className="dark:text-gray-200">
             Favorite
           </NavbarLink>
         </div>
@@ -86,16 +86,16 @@ export function Nav() {
       </div>
 
       <NavbarCollapse className="md:hidden">
-        <NavbarLink as={Link} to="/product">
+        <NavbarLink as={Link} to="/product" className="dark:text-gray-200">
           Product
         </NavbarLink>
-        <NavbarLink as={Link} to="/cart">
+        <NavbarLink as={Link} to="/cart" className="dark:text-gray-200">
           Cart
         </NavbarLink>
-        <NavbarLink as={Link} to="/shipping">
+        <NavbarLink as={Link} to="/shipping" className="dark:text-gray-200">
           Shipping
         </NavbarLink>
-        <NavbarLink as={Link} to="/favorite">
+        <NavbarLink as={Link} to="/favorite" className="dark:text-gray-200">
           Favorite
         </NavbarLink>
       </NavbarCollapse>

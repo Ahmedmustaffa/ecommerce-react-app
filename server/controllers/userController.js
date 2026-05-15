@@ -6,8 +6,9 @@ exports.toggleFavorite = async (req, res) => {
         const userId = req.user.id; 
 
         const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ status: 'fail', message: "User not found" });
 
-        const isFavorite = user.favorite.includes(productId);
+        const isFavorite = user.favorite.some((id) => id.toString() === productId);
 
         let update;
         if (isFavorite) {

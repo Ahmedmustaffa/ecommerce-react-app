@@ -32,7 +32,7 @@ exports.addToCart = async (req, res) => {
             });
         }
 
-        res.status(200).json({ status: 'success', data: cart });
+        res.status(200).json({ status: 'success', success: true, data: cart, cart });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
@@ -44,11 +44,42 @@ exports.getCart = async (req, res) => {
         if (!cart) {
             return res.status(404).json({ message: "Cart is empty" });
         }
-        res.status(200).json({ status: 'success', data: cart });
+        res.status(200).json({ status: 'success', success: true, data: cart, cart });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
 };
+
+exports.updateCartItem = async (req, res) => {
+    try {
+        const { productId, quantity } = req.body;
+
+        if (!productId || !quantity || quantity < 1) {
+            return res.status(400).json({ status: 'fail', success: false, message: "Invalid product or quantity" });
+        }
+
+        const cart = await Cart.findOne({ user: req.user.id, state: 'pending' });
+
+        if (!cart) {
+            return res.status(404).json({ status: 'fail', success: false, message: "Cart is empty" });
+        }
+
+        const product = cart.products.find((item) => item.productId.toString() === productId);
+
+        if (!product) {
+            return res.status(404).json({ status: 'fail', success: false, message: "Product not found in cart" });
+        }
+
+        product.quantity = quantity;
+        await cart.save();
+        await cart.populate('products.productId');
+
+        res.status(200).json({ status: 'success', success: true, data: cart, cart });
+    } catch (error) {
+        res.status(400).json({ status: 'fail', success: false, message: error.message });
+    }
+};
+
 exports.removeFromCart = async (req, res) => {
     try {
         const { productId } = req.params;
@@ -56,10 +87,10 @@ exports.removeFromCart = async (req, res) => {
             { user: req.user.id, state: 'pending' },
             { $pull: { products: { productId: productId } } },
             { new: true }
-        );
+        ).populate('products.productId');
 
-        res.status(200).json({ status: 'success', data: cart });
+        res.status(200).json({ status: 'success', success: true, data: cart, cart });
     } catch (error) {
-        res.status(400).json({ status: 'fail', message: error.message });
+        res.status(400).json({ status: 'fail', success: false, message: error.message });
     }
 };

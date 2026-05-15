@@ -5,6 +5,7 @@ const authController = require('../controllers/authController');
 
 router.post('/add', authController.protect, cartController.addToCart);
 router.get('/', authController.protect, cartController.getCart);
+router.put('/', authController.protect, cartController.updateCartItem);
 router.delete('/:productId', authController.protect, cartController.removeFromCart);
 
 module.exports = router;

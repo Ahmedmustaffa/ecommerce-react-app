@@ -1,8 +1,17 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { validateUser } = require('../utils/validators');
+
+const getJwtSecret = () => {
+    if (!process.env.JWT_SECRET) {
+        throw new Error("JWT_SECRET is missing in environment variables");
+    }
+
+    return process.env.JWT_SECRET;
+};
+
 const signToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '90d' });
+    return jwt.sign({ id }, getJwtSecret(), { expiresIn: '90d' });
 };
 
 exports.signup = async (req, res) => {
@@ -63,7 +72,7 @@ exports.protect = async (req, res, next) => {
         }
 
         // check if token is valid
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, getJwtSecret());
 
         //search for user with token
         const currentUser = await User.findById(decoded.id);

@@ -8,6 +8,7 @@ export function Register() {
 
   const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
+  const [loading, setLoading] = useState(false);
   
   const [formData, setFormData] = useState({
     username: "",
@@ -23,6 +24,7 @@ export function Register() {
     if (errors[e.target.id]) {
       setErrors({ ...errors, [e.target.id]: null });
     }
+    setApiError("");
   };
 
   const validate = () => {
@@ -67,6 +69,9 @@ export function Register() {
     
     if (isValid) {
       try {
+        setLoading(true);
+        setApiError("");
+
         // Send userName and password to match backend schema
         const response = await registerUser({
             userName: formData.username,
@@ -81,6 +86,8 @@ export function Register() {
 
       } catch (error) {
         setApiError(error.response?.data?.message || "Registration failed.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -89,6 +96,12 @@ export function Register() {
     <div className="w-full max-w-md">
       <Card className="min-w-lg">
         <h3 className="dark:text-white text-2xl">Register</h3>
+
+        {apiError && (
+          <HelperText color="failure" className="text-center text-lg">
+            {apiError}
+          </HelperText>
+        )}
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           
@@ -153,7 +166,9 @@ export function Register() {
 
             </div>
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
         </form>
 
         <p className="text-center text-sm text-gray-600 dark:text-gray-300">
