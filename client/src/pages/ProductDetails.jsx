@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProductById } from "../Api/ProdductApi";
+import { getProductById } from "../API/ProductApi";
 
 function ProductDetails() {
   const [product, setProduct] = useState({});
