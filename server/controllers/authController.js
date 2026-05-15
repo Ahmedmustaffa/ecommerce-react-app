@@ -11,8 +11,10 @@ exports.signup = async (req, res) => {
     try {
         const newUser = await User.create({
             userName: req.body.userName,
-            password: req.body.password
+            password: req.body.password,
+            email: req.body.email
         });
+
 
         const token = signToken(newUser._id);
 
@@ -35,7 +37,7 @@ exports.login = async (req, res) => {
         }
 
         const user = await User.findOne({ userName }).select('+password');
-        
+
         if (!user || !(await user.correctPassword(password, user.password))) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
@@ -50,8 +52,8 @@ exports.login = async (req, res) => {
 exports.protect = async (req, res, next) => {
     try {
         let token;
-        
-// check if token exists in headers
+
+        // check if token exists in headers
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             token = req.headers.authorization.split(' ')[1];
         }
@@ -60,10 +62,10 @@ exports.protect = async (req, res, next) => {
             return res.status(401).json({ message: "You are not logged in! Please log in to get access." });
         }
 
-// check if token is valid
+        // check if token is valid
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-//search for user with token
+        //search for user with token
         const currentUser = await User.findById(decoded.id);
         if (!currentUser) {
             return res.status(401).json({ message: "The user belonging to this token no longer exists." });
