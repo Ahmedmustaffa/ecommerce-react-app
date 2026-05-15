@@ -92,6 +92,9 @@ export function Nav() {
         <NavbarLink as={Link} to="/cart">
           Cart
         </NavbarLink>
+        <NavbarLink as={Link} to="/shipping">
+          Shipping
+        </NavbarLink>
         <NavbarLink as={Link} to="/favorite">
           Favorite
         </NavbarLink>
