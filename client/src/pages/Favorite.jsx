@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card } from "flowbite-react";
 import { getAllProduct } from "../API/ProductApi";
 import { Nav } from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const FAVORITES_KEY = "favoriteProducts";
 
@@ -161,6 +162,7 @@ export default function Favorite() {
           </div>
         )}
       </section>
+      <Footer/>
     </div>
   );
 }

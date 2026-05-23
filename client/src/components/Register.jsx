@@ -9,6 +9,7 @@ export function Register() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
+  const duplicateAccountMessage = "This email already exist, try to login";
   
   const [formData, setFormData] = useState({
     username: "",
@@ -82,10 +83,21 @@ export function Register() {
         // Save token and navigate to home
         localStorage.setItem("token", response.data.token);
         console.log("Registered successfully!");
-        navigate("/");
+        navigate("/login");
 
       } catch (error) {
-        setApiError(error.response?.data?.message || "Registration failed.");
+        const errorMessage = error.response?.data?.message || "";
+        const normalizedErrorMessage = errorMessage.toLowerCase();
+        const isDuplicateAccountError =
+          (normalizedErrorMessage.includes("e11000") ||
+            normalizedErrorMessage.includes("duplicate") ||
+            normalizedErrorMessage.includes("already exist")) &&
+          (normalizedErrorMessage.includes("email") ||
+            normalizedErrorMessage.includes("username"));
+
+        setApiError(
+          isDuplicateAccountError ? duplicateAccountMessage : errorMessage || "Registration failed."
+        );
       } finally {
         setLoading(false);
       }

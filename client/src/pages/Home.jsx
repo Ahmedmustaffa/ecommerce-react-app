@@ -1,6 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { Nav } from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Home() {
   // 1. Check for authentication tokens in localStorage
@@ -36,6 +37,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }

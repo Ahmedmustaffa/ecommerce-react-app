@@ -60,7 +60,7 @@ export function Nav() {
   };
 
   return (
-    <Navbar className="border-b border-gray-200 bg-white px-4 py-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <Navbar className="border-b border-gray-200 bg-white px-4 py-3 shadow-sm dark:border-gray-800 dark:bg-gray-900/20">
       
       <NavbarBrand as={Link} to="/">
         <div

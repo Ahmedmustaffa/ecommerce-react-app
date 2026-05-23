@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EmptyState from "../components/EmptyState.jsx";
 import { Nav } from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -294,6 +295,7 @@ export default function CartPage() {
           </aside>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }
