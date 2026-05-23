@@ -8,19 +8,19 @@ export default function Footer() {
                 </span>
                 <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
                     <li>
-                        <a href="http://localhost:5173/register" class="hover:underline me-4 md:me-6">Ahmed</a>
+                        <a href="http://localhost:5173/register" class="hover:underline hover:text-yellow-100 me-4 md:me-6">Ahmed</a>
                     </li>
                     <li>
-                        <a href="http://localhost:5173/product/69fe01af6253a066b631baee" class="hover:underline me-4 md:me-6">Ashraf</a>
+                        <a href="http://localhost:5173/product/69fe01af6253a066b631baee" class="hover:underline  hover:text-yellow-100 me-4 md:me-6">Ashraf</a>
                     </li>
                     <li>
-                        <a href="http://localhost:5173/cart" class="hover:underline me-4 md:me-6">David</a>
+                        <a href="http://localhost:5173/cart" class="hover:underline hover:text-yellow-100 me-4 md:me-6">David</a>
                     </li>
                     <li>
-                        <a href="http://localhost:5000/api/products" class="hover:underline me-4 md:me-6">Mahmoud</a>
+                        <a href="http://localhost:5000/api/products" class="hover:underline hover:text-yellow-100  me-4 md:me-6">Mahmoud</a>
                     </li>
                     <li>
-                        <a href="http://localhost:5173/product" class="hover:underline">Mostafa</a>
+                        <a href="http://localhost:5173/product" class="hover:underline hover:text-yellow-100">Mostafa</a>
                     </li>
                 </ul>
             </div>

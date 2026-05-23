@@ -82,11 +82,7 @@ export function Login() {
             {errors.password && <HelperText color="failure">{errors.password}</HelperText>}
           </div>
 
-          <div className="flex items-center gap-2">
-            <Checkbox id="remember" />
-            <Label htmlFor="remember">Remember me</Label>
-          </div>
-          
+         
           <Button type="submit">Submit</Button>
         </form>
 
